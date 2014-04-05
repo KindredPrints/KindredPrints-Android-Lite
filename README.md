@@ -1,6 +1,8 @@
-# Kindred Prints Android SDK
+# Kindred Prints Android Lightweight SDK
 
 The Kindred Prints SDK makes it extremely easy to start selling and getting paid for physical printed photos straight from your app. You simply need drop the folder into your iPhone or iPad project, and add a photo through our simple SDK interface to send your user to the checkout flow.
+
+NOTE: This version offloads the actual meat of the SDK into a dummy app called [Kindred Premium Photo Prints](https://play.google.com/store/apps/details?id=com.kindredprints.kindredphotoprints) while this version is just a few small files which handle the Intent based interface which delivers photos from your app to our printing app. Once the user has downloaded our app, it's a perfectly smooth transition between apps. If you are looking for the full SDK that does not require users to download an app, please check [this Github project](https://github.com/KindredPrints/KindredPrints-Android). (Thanks Rafa!)
 
 ![Kindred Diagram](https://s3-us-west-1.amazonaws.com/kindredmetaimages/KindredDiagram.png)
 
@@ -48,7 +50,7 @@ Follow the instructions in this section if you want to see how an example test a
 
 You can grab a zipped copy here.
 
-1. Dowload the [zipped test project and SDK](https://s3-us-west-1.amazonaws.com/kindredmeta/KindredPrints-Android.zip) to the folder of your choice
+1. Dowload the [zipped test project and SDK](https://s3-us-west-1.amazonaws.com/kindredmeta/KindredPrints-Android-Lite.zip) to the folder of your choice
 
 1. Unzip it to your development workspace
 
@@ -56,7 +58,7 @@ OR clone this project and open it in Xcode.
 
 1. `cd` into your development directory.
 
-1. Run `git clone git://github.com/kindredprints/kindredprints-android.git` in the command line
+1. Run `git clone git://github.com/kindredprints/kindredprints-android-lite.git` in the command line
 
 Then,
 
@@ -64,11 +66,11 @@ Then,
 
 3. Go to **File -> Import** and choose **Existing Android Code into Workspace** under the Android folder
 
-3. Select the **KindredPrints-Android-SDK**
+3. Select the **KindredPrints-Android-SDK-Lite**
 
-3. Make sure both **KindredPrints-SDK-TestBed** and **KindredPrints-Android-SDK** are selected and click Finish.
+3. Make sure both **KindredPrints-SDK-TestBed-Lite** and **KindredPrints-Android-SDK-Lite** are selected and click Finish.
 
-3. View **MainActivity.java** in the **KindredPrints-SDK-TestBed** and update this line with your test Kindred App ID (you can grab one by signing up [here](http://sdk.kindredprints.com/signup/).)
+3. View **MainActivity.java** in the **KindredPrints-SDK-TestBed-Lite** and update this line with your test Kindred App ID (you can grab one by signing up [here](http://sdk.kindredprints.com/signup/).)
 
 ```java
 private final static String KINDRED_APP_KEY = "YOUR TEST KEY HERE";
@@ -81,16 +83,16 @@ private final static String KINDRED_APP_KEY = "YOUR TEST KEY HERE";
 
 If you would prefer to just add the SDK folder to your project and get started right away with out looking at the test app, follow these instructions.
 
-1. You can grab a zipped copy of the **KindredPrints-Android-SDK** folder [here](https://s3-us-west-1.amazonaws.com/kindredmeta/KindredPrints-Android-SDK.zip)
+1. You can grab a zipped copy of the **KindredPrints-Android-SDK-Lite** folder [here](https://s3-us-west-1.amazonaws.com/kindredmeta/KindredPrints-Android-SDK-Lite.zip)
 
-Or use the **KindredPrints-Android-SDK** folder out of the test project folder (instructions on downloading above)
+Or use the **KindredPrints-Android-SDK-Lite** folder out of the test project folder (instructions on downloading above)
 
 1. Go to **File -> Import** and choose **Existing Android Code into Workspace** under the Android folder
-1. Select the **KindredPrints-Android-SDK**
-1. Ensure **KindredPrints-Android-SDK** is selected and click Finish.
+1. Select the **KindredPrints-Android-SDK-Lite**
+1. Ensure **KindredPrints-Android-SDK-Lite** is selected and click Finish.
 1. Right click on your project in Eclipse/Android Development Tools and find **Build Path -> Configure Build Path**
 1. Click **Android** on the left
-1. In the **Library** subsection on the right, click **Add** and choose **KindredPrints-Android-SDK** from the list
+1. In the **Library** subsection on the right, click **Add** and choose **KindredPrints-Android-SDK-Lite** from the list
 
 ### Using the SDK
 
@@ -101,9 +103,12 @@ In order to fully employ all of the SDK functions, here are the initial project 
 **Permissions**
 In your project's AndroidManifest.xml, here the recommended permissions that you should request from your app for optimal experience.
 
-Internet [required]: We absolutely require access to the internet. Hopefully you already have this permission.
+Custom permission [required]:
 ```xml
-<uses-permission android:name="android.permission.INTERNET"/>
+<permission
+  android:name="com.kindredprints.sdk.PHOTO_EXPORT"
+  android:protectionLevel="normal" />
+<uses-permission android:name="com.kindredprints.sdk.PHOTO_EXPORT" />
 ```
 
 Contacts [Optional]: We offer the option for the user to import addresses from their contacts. We don't do anything with the contact permission aside from importing the details of the contact which the user selects. No other data touches our servers.
@@ -111,12 +116,18 @@ Contacts [Optional]: We offer the option for the user to import addresses from t
 <uses-permission android:name="android.permission.READ_CONTACTS"/>
 ```
 
-**Order Flow Activity**
-You need to register our order flow activity inside your manifest. Add the line below inside the <application> </application> tags.
+**Receiver**
+You need to register our broadcast receiver so that your app can send our app photos. Add the line below inside the <application> </application> tags.
 ```xml
 <application>
     ....
-    <activity android:name="com.kindred.kindredprints_android_sdk.KindredOrderFlowActivity" />
+    <receiver 
+      android:name="com.kindredprints.sdk_lite.KindredOrderReceiver"
+      android:permission="com.kindredprints.sdk.PHOTO_EXPORT" >
+      <intent-filter>
+        <action android:name="com.kindredprints.sdk.PHOTO_REQUEST" />
+      </intent-filter>
+    </receiver>
 </application>
 ```
 #### A note about testing
