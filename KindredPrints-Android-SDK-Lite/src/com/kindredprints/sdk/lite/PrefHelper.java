@@ -1,4 +1,4 @@
-package com.kindredprints.sdk_lite;
+package com.kindredprints.sdk.lite;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,4 +1,4 @@
-package com.kindred.kindredprints_android_sdk;
+package com.kindredprints.android.sdk;
 
 import android.os.Parcel;
 import android.os.Parcelable;

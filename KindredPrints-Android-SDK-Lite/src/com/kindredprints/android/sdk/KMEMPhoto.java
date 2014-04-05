@@ -1,4 +1,4 @@
-package com.kindred.kindredprints_android_sdk;
+package com.kindredprints.android.sdk;
 
 import android.graphics.Bitmap;
 import android.os.Parcel;

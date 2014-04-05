@@ -1,8 +1,8 @@
-package com.kindredprints.testbed_lite;
+package com.kindredprints.testbed.lite;
 
-import com.kindred.kindredprints_android_sdk.KLOCPhoto;
-import com.kindred.kindredprints_android_sdk.KURLPhoto;
-import com.kindredprints.sdk_lite.KindredOrderFlow;
+import com.kindredprints.android.sdk.KLOCPhoto;
+import com.kindredprints.android.sdk.KURLPhoto;
+import com.kindredprints.sdk.lite.KindredOrderFlow;
 
 import android.net.Uri;
 import android.os.Bundle;

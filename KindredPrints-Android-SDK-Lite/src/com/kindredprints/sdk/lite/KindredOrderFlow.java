@@ -1,8 +1,8 @@
-package com.kindredprints.sdk_lite;
+package com.kindredprints.sdk.lite;
 
 import java.util.ArrayList;
 
-import com.kindred.kindredprints_android_sdk.KPhoto;
+import com.kindredprints.android.sdk.KPhoto;
 
 
 import android.content.Context;
