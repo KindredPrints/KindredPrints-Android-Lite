@@ -1,4 +1,4 @@
-# Kindred Prints Android Lightweight SDK
+# Kindred Prints Android Light SDK
 
 The Kindred Prints SDK makes it extremely easy to start selling and getting paid for physical printed photos straight from your app. You simply need drop the folder into your iPhone or iPad project, and add a photo through our simple SDK interface to send your user to the checkout flow.
 
@@ -109,11 +109,6 @@ Custom permission [required]:
   android:name="com.kindredprints.sdk.PHOTO_EXPORT"
   android:protectionLevel="normal" />
 <uses-permission android:name="com.kindredprints.sdk.PHOTO_EXPORT" />
-```
-
-Contacts [Optional]: We offer the option for the user to import addresses from their contacts. We don't do anything with the contact permission aside from importing the details of the contact which the user selects. No other data touches our servers.
-```xml
-<uses-permission android:name="android.permission.READ_CONTACTS"/>
 ```
 
 **Receiver**
