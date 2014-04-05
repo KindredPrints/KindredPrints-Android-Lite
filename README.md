@@ -151,9 +151,7 @@ import com.kindredprints.android.sdk.KindredOrderFlowActivity;
     
     orderFlow.addImageToCart(new KLOCPhoto(null, (String)absoluteFilePathToPicture));
 
-
-    Intent i = new Intent(getApplicationContext(), KindredOrderFlowActivity.class);
-    startActivityForResult(i, 0);
+    orderFlow.showCart();
    ```
 5. Replace the "KINDRED_APP_KEY" with your test or live key (depending on which mode you are in). You can get one for you app through the quick signup process [here](http://sdk.kindredprints.com/signup/)
 
@@ -220,9 +218,9 @@ Alternatively, if you also store a remote url for a pre rendered preview size im
 7. Now, add a button somewhere on the display that says "Checkout"
 
 7. Create a method to handle the button click and insert this code into it:
-   ```java
-    Intent i = new Intent(getApplicationContext(), KindredOrderFlowActivity.class);
-    startActivityForResult(i, 0);
+   ```java    
+    KindredOrderFlow orderFlow  = new KindredOrderFlow(this, KINDRED_APP_KEY);
+    orderFlow.showCart();
    ```
 
 7. You're done! The user can now check out all of the images they've added before.
