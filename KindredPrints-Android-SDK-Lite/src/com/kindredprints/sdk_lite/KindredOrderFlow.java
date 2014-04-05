@@ -28,20 +28,22 @@ public class KindredOrderFlow {
 	public static final int KP_RESULT_CANCELLED = 101;
 	public static final int KP_RESULT_PURCHASED = 102;
 	
-	private ArrayList<KPhoto> photosToSend;
+	static private ArrayList<KPhoto> photosToSend;
 	
 	public KindredOrderFlow(Context context) {
 		this.context_ = context;
 		this.pHelper_ = new PrefHelper(context);
-		if (this.photosToSend == null) {
-			this.photosToSend = new ArrayList<KPhoto>();
+		if (photosToSend == null) {
+			photosToSend = new ArrayList<KPhoto>();
 		}
 	}
 	
 	public KindredOrderFlow(Context context, String key) {
 		this.context_ = context;
 		this.pHelper_ = new PrefHelper(context);
-		this.photosToSend = new ArrayList<KPhoto>();
+		if (photosToSend == null) {
+			photosToSend = new ArrayList<KPhoto>();
+		}
 		this.pHelper_.setAppKey(key);
 	}
 	
@@ -75,7 +77,7 @@ public class KindredOrderFlow {
 			    this.pHelper_.setNeedSendData(false);
 		    }
 		    this.context_.startActivity(i);
-			this.photosToSend.clear();
+			photosToSend.clear();
 
 		} catch (PackageManager.NameNotFoundException e) {
 			try {
@@ -117,7 +119,7 @@ public class KindredOrderFlow {
 	
 	private void flexAddToCart(KPhoto photo) {
 		this.pHelper_.setNeedSendData(true);
-		this.photosToSend.add(photo);
+		photosToSend.add(photo);
 	}
 	
 	// PREP INTENT
@@ -143,9 +145,9 @@ public class KindredOrderFlow {
 		if (this.pHelper_.getTextColor() != -1) {
 			i.putExtra(KEY_TEXT_COLOR, this.pHelper_.getTextColor());
 		}
-		Log.i("KindredTestBed", "count of photos to be added to bundle = " + this.photosToSend.size());
+		Log.i("KindredTestBed", "count of photos to be added to bundle = " + photosToSend.size());
 
-		i.putParcelableArrayListExtra(KEY_PICTURES, this.photosToSend);		
+		i.putParcelableArrayListExtra(KEY_PICTURES, photosToSend);		
 		return i;
 	}
 }
