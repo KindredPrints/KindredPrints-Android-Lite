@@ -11,6 +11,8 @@
     	android:name="com.kindredprints.sdk.PHOTO_EXPORT"
     	android:protectionLevel="normal" />
     <uses-permission android:name="com.kindredprints.sdk.PHOTO_EXPORT" />
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="true" />
     
     <application
         android:allowBackup="true"

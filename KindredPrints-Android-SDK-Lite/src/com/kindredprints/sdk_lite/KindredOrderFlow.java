@@ -2,6 +2,8 @@ package com.kindredprints.sdk_lite;
 
 import java.util.ArrayList;
 
+import com.kindred.kindredprints_android_sdk.KPhoto;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +33,9 @@ public class KindredOrderFlow {
 	public KindredOrderFlow(Context context) {
 		this.context_ = context;
 		this.pHelper_ = new PrefHelper(context);
+		if (this.photosToSend == null) {
+			this.photosToSend = new ArrayList<KPhoto>();
+		}
 	}
 	
 	public KindredOrderFlow(Context context, String key) {
@@ -70,6 +75,8 @@ public class KindredOrderFlow {
 			    this.pHelper_.setNeedSendData(false);
 		    }
 		    this.context_.startActivity(i);
+			this.photosToSend.clear();
+
 		} catch (PackageManager.NameNotFoundException e) {
 			try {
 			    this.context_.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.kindredprints.kindredphotoprints"))); 
@@ -138,8 +145,7 @@ public class KindredOrderFlow {
 		}
 		Log.i("KindredTestBed", "count of photos to be added to bundle = " + this.photosToSend.size());
 
-		i.putParcelableArrayListExtra(KEY_PICTURES, this.photosToSend);
-		
+		i.putParcelableArrayListExtra(KEY_PICTURES, this.photosToSend);		
 		return i;
 	}
 }

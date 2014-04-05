@@ -1,12 +1,15 @@
 package com.kindredprints.testbed_lite;
 
-import com.kindredprints.sdk_lite.KURLPhoto;
+import com.kindred.kindredprints_android_sdk.KLOCPhoto;
+import com.kindred.kindredprints_android_sdk.KURLPhoto;
 import com.kindredprints.sdk_lite.KindredOrderFlow;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -121,6 +124,33 @@ public class MainActivity extends Activity {
     		Log.i("KindredTestBed", "User cancelled Kindred purchase");
     	} else if (resultCode == KindredOrderFlow.KP_RESULT_PURCHASED) {
     		Log.i("KindredTestBed", "User completed Kindred purchase!");
+    	} else if (requestCode == RESULT_GALLERY_LOAD_IMAGE & resultCode == RESULT_OK && data != null) {
+    		Log.i("TestActivity", "Grabbed a gallery image");
+    		Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+ 
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+			orderFlow.addImageToCart(new KLOCPhoto(null, picturePath));
+			showToast("image added");
+    	} else if (requestCode == RESULT_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+    		Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+ 
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+			orderFlow.addImageToCart(new KLOCPhoto(null, picturePath));
+			showToast("image added");
     	}
     }
 }
