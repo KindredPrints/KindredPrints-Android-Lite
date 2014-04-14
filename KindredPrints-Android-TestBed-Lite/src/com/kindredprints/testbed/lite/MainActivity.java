@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
 	private static int RESULT_GALLERY_LOAD_IMAGE = 1;
 	private static int RESULT_IMAGE_CAPTURE = 2;
 	
-	private final static String KINDRED_APP_KEY = "test_SDHdPzfxotJ8xAQ674ABbXap";
+	private final static String KINDRED_APP_KEY = "YOUR TEST KEY HERE";
 	private KindredOrderFlow orderFlow;
 	
 	EditText editTxtUrl;
@@ -136,7 +136,10 @@ public class MainActivity extends Activity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-			orderFlow.addImageToCart(new KLOCPhoto(null, picturePath));
+            if (picturePath.contains("http"))
+            	orderFlow.addImageToCart(new KURLPhoto(null, picturePath));
+            else
+            	orderFlow.addImageToCart(new KLOCPhoto(null, picturePath));
 			showToast("image added");
     	} else if (requestCode == RESULT_IMAGE_CAPTURE && resultCode == RESULT_OK) {
     		Uri selectedImage = data.getData();
