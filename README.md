@@ -103,7 +103,7 @@ In order to fully employ all of the SDK functions, here are the initial project 
 **Permissions**
 In your project's AndroidManifest.xml, here the recommended permissions that you should request from your app for optimal experience.
 
-Custom permission [required]:
+Custom permission [required]: Please note that this will NOT cause the permissions screen to be shown for users on upgrade since the protectionLevel is set to normal. Background updating will still happen automatically.
 ```xml
 <permission
   android:name="com.kindredprints.sdk.PHOTO_EXPORT"
