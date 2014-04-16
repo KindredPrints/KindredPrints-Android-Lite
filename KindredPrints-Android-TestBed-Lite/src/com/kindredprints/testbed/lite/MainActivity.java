@@ -1,5 +1,6 @@
 package com.kindredprints.testbed.lite;
 
+import com.kindredprints.android.sdk.KCustomPhoto;
 import com.kindredprints.android.sdk.KLOCPhoto;
 import com.kindredprints.android.sdk.KURLPhoto;
 import com.kindredprints.sdk.lite.KindredOrderFlow;
@@ -28,6 +29,8 @@ public class MainActivity extends Activity {
 	EditText editTxtUrl;
 	Button cmdAddUrl;
 	Button cmdAddThree;
+
+	Button cmdAddCustom;
 	
 	Button cmdTakePhoto;
 	Button cmdPickFromGallery;
@@ -47,6 +50,15 @@ public class MainActivity extends Activity {
         orderFlow.setImageBorderDisabled(false);
 		orderFlow.setAppKey(KINDRED_APP_KEY);
 
+		this.cmdAddCustom = (Button) findViewById(R.id.cmdAddSpecial);
+		this.cmdAddCustom.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				orderFlow.addImageToCart(new KCustomPhoto("0", "allthecooks", "http://www.allthecooks.com/amies-achara.html"));
+				showToast("image added");
+			}
+		});
+		
         this.cmdShowCart = (Button) findViewById(R.id.cmdShowCart);
         this.cmdShowCart.setOnClickListener(new OnClickListener() {
 			@Override
